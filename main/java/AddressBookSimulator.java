@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class AddressBookSimulator {
@@ -20,7 +17,8 @@ public class AddressBookSimulator {
         while(!isExit) {
             System.out.println("Select options: \n1.Add Book\n2.AccessBook\n3.Search contact by city/state\n" +
                                                   "4.Show the contacts by city\n5.Show the contacts by state\n" +
-                                                  "6.Find number of contacts in a city/state\n7.Exit");
+                                                  "6.Find number of contacts in a city/state\n7.Sort the contacts\n" +
+                                                  "8.Exit");
             int option = addressBookSimulator.scannerForAddressBook.scannerProvider().nextInt();
             switch(option) {
                 case 1:
@@ -48,6 +46,9 @@ public class AddressBookSimulator {
                     break;
                 case 6:
                     addressBookSimulator.countContactsByCityOrState();
+                    break;
+                case 7:
+                    addressBookSimulator.sortByFirstName();
                     break;
                 default:
                     isExit = true;
@@ -155,6 +156,19 @@ public class AddressBookSimulator {
                             .filter(contact -> contact.getCity().equals(placeName2) ||
                                     contact.getState().equals(placeName2))
                             .count());
+        });
+    }
+
+    /**
+     * sort by first name
+     */
+    public void sortByFirstName() {
+        addressBookSimulator.booksMap.entrySet().forEach(entry -> {
+            System.out.println("sorted contacts by first name: " + entry.getValue()
+                    .getContactsList()
+                    .stream()
+                    .sorted(Comparator.comparing(ContactPOJO::getFirstName))
+                    .collect(Collectors.toList()));
         });
     }
 
