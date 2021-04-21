@@ -13,7 +13,8 @@ public class AddressBookSimulator {
 
         boolean isExit = false;
         while(!isExit) {
-            System.out.println("Select options: \n1.Add Book\n2.AccessBook\n3.Exit");
+            System.out.println("Select options: \n1.Add Book\n2.AccessBook\n3.Search contact by city/state\n" +
+                                                  "4.Exit");
             int option = addressBookSimulator.scannerForAddressBook.scannerProvider().nextInt();
             switch(option) {
                 case 1:
@@ -29,6 +30,9 @@ public class AddressBookSimulator {
                     } else {
                         System.out.println("Book doesn't exists!");
                     }
+                    break;
+                case 3:
+                    addressBookSimulator.searchContactByCityOrState();
                     break;
                 default:
                     isExit = true;
@@ -67,6 +71,21 @@ public class AddressBookSimulator {
         } else {
             addressBookSimulator.booksMap.put(bookName, new AddressBookService());
         }
+    }
+
+    /**
+     * Search contact by city/state
+     */
+    public void searchContactByCityOrState(){
+        System.out.println("Enter the city/state name to search contact");
+        String placeName = scannerForAddressBook.scannerProvider().nextLine();
+        addressBookSimulator.booksMap.entrySet().forEach(entry -> {
+            System.out.println(entry.getKey());
+            System.out.println(entry.getValue().getContactsList().stream()
+                    .filter(contact -> contact.getCity().equals(placeName) ||
+                            contact.getState().equals(placeName))
+                    .findFirst().orElse(null));
+        });
     }
 
     /**

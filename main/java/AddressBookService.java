@@ -8,6 +8,10 @@ public class AddressBookService {
     List<ContactPOJO> contactsList = new ArrayList<>();
     ScannerForAddressBook scannerForAddressBook = new ScannerForAddressBook();
 
+    public List<ContactPOJO> getContactsList() {
+        return contactsList;
+    }
+
     /**
      * method to add new contact from the console
      */
