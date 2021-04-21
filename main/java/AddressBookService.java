@@ -36,8 +36,7 @@ public class AddressBookService {
     /**
      * edits the contact details of selected name
      */
-    public void editDetails() {
-        String name = getName();
+    public void editDetails(String name) {
         if (isContactExist(name) == true) {
             ContactPOJO contact = getContact(name);
             boolean isExit = false;
@@ -89,6 +88,16 @@ public class AddressBookService {
     }
 
     /**
+     * to remove contact
+     *
+     * @param contact object of Contact class
+     */
+    public void deleteContact(ContactPOJO contact) {
+        contactsList.remove(contact);
+        System.out.println(contactsList);
+    }
+
+    /**
      * asks the user for name and returns it
      *
      * @return contact first name / last name
@@ -126,5 +135,35 @@ public class AddressBookService {
                         personElement.getFirstName().equals(name) ||
                                 personElement.getLastName().equals(name));
         return existance;
+    }
+
+    /**
+     * to access the book
+     */
+    public void accessAddressBook() {
+        //adds new contact
+        System.out.println("Adding new contact!");
+        addContact();
+
+        //edits contact if its exists
+        System.out.println("Editing existing contact!");
+        String name = getName();
+        if (isContactExist(name)) {
+            editDetails(name);
+        } else {
+            System.out.println("Contact does not exists!");
+        }
+
+        //deletes contact if it exists
+        System.out.println("Deleting existing contact!");
+        String name1 = getName();
+        if (isContactExist(name1)) {
+            ContactPOJO contact = getContact(name1);
+            deleteContact(contact);
+            System.out.println("contact deleted successfully!");
+        } else {
+            System.out.println("Contact does not exists!");
+        }
+        System.out.println("Thanks!");
     }
 }
