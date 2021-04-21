@@ -1,3 +1,6 @@
+/**
+ * Simple POJO for contacts
+ */
 public class ContactPOJO {
     private String firstName;
     private String lastName;
