@@ -141,29 +141,38 @@ public class AddressBookService {
      * to access the book
      */
     public void accessAddressBook() {
-        //adds new contact
-        System.out.println("Adding new contact!");
-        addContact();
-
-        //edits contact if its exists
-        System.out.println("Editing existing contact!");
-        String name = getName();
-        if (isContactExist(name)) {
-            editDetails(name);
-        } else {
-            System.out.println("Contact does not exists!");
+        boolean isExit = false;
+        while (!isExit) {
+            System.out.println("Select option: \n1.Add Contact\n2.Edit Contact\n" +
+                                                "3.Delete Contact\n4.Exit");
+            int option = scannerForAddressBook.scannerProvider().nextInt();
+            switch (option) {
+                case 1:
+                    addContact();
+                    System.out.println("Contact added successfully!");
+                    break;
+                case 2:
+                    String name = getName();
+                    if (isContactExist(name)) {
+                        editDetails(name);
+                    } else {
+                        System.out.println("Contact does not exists!");
+                    }
+                    break;
+                case 3:
+                    String name1 = getName();
+                    if (isContactExist(name1)) {
+                        ContactPOJO contact = getContact(name1);
+                        deleteContact(contact);
+                        System.out.println("Contact deleted successfully!");
+                    } else {
+                        System.out.println("Contact does not exists!");
+                    }
+                    break;
+                default:
+                    System.out.println("Thanks!");
+                    isExit = true;
+            }
         }
-
-        //deletes contact if it exists
-        System.out.println("Deleting existing contact!");
-        String name1 = getName();
-        if (isContactExist(name1)) {
-            ContactPOJO contact = getContact(name1);
-            deleteContact(contact);
-            System.out.println("contact deleted successfully!");
-        } else {
-            System.out.println("Contact does not exists!");
-        }
-        System.out.println("Thanks!");
     }
 }
