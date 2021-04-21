@@ -148,8 +148,12 @@ public class AddressBookService {
             int option = scannerForAddressBook.scannerProvider().nextInt();
             switch (option) {
                 case 1:
-                    addContact();
-                    System.out.println("Contact added successfully!");
+                    if (!isContactExist(getName())) {
+                        addContact();
+                        System.out.println("Contact added successfully!");
+                    } else {
+                        System.out.println("Contact already exists!");
+                    }
                     break;
                 case 2:
                     String name = getName();

@@ -17,10 +17,18 @@ public class AddressBookSimulator {
             int option = addressBookSimulator.scannerForAddressBook.scannerProvider().nextInt();
             switch(option) {
                 case 1:
-                    addressBookSimulator.addBook();
+                    if(!addressBookSimulator.isBookExists()){
+                        addressBookSimulator.addBook();
+                    } else {
+                        System.out.println("Book already exists!");
+                    }
                     break;
                 case 2:
-                    addressBookSimulator.accessBook();
+                    if(addressBookSimulator.isBookExists()) {
+                        addressBookSimulator.accessBook();
+                    } else {
+                        System.out.println("Book doesn't exists!");
+                    }
                     break;
                 default:
                     isExit = true;
@@ -31,11 +39,29 @@ public class AddressBookSimulator {
     }
 
     /**
+     * checks if the book is exists?
+     */
+    public boolean isBookExists(){
+        if(booksMap.containsKey(getNameOfBook())){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * get the name of book
+     */
+    public String getNameOfBook(){
+        System.out.println("Enter the name of the book");
+        String bookName = scannerForAddressBook.scannerProvider().nextLine();
+        return bookName;
+    }
+
+    /**
      * add new Book
      */
     public void addBook(){
-        System.out.println("Enter the name of new book");
-        String bookName = scannerForAddressBook.scannerProvider().nextLine();
+        String bookName = getNameOfBook();
         if(addressBookSimulator.booksMap.containsKey(bookName)){
             System.out.println("Book already exists!");
         } else {
@@ -47,10 +73,9 @@ public class AddressBookSimulator {
      * Access existing Book
      */
     public void accessBook(){
-        System.out.println("Enter the name of the book to access it");
-        Object bookName1 = scannerForAddressBook.scannerProvider().nextLine();
-        if(addressBookSimulator.booksMap.containsKey(bookName1)) {
-            AddressBookService addressBookService = addressBookSimulator.booksMap.get(bookName1);
+        Object bookName = getNameOfBook();
+        if(addressBookSimulator.booksMap.containsKey(bookName)) {
+            AddressBookService addressBookService = addressBookSimulator.booksMap.get(bookName);
             addressBookService.accessAddressBook();
             System.out.println("sorted contacts: "+addressBookSimulator.booksMap.toString());
         }
