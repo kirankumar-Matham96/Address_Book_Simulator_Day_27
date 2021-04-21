@@ -5,6 +5,7 @@ import java.util.List;
  * Program to simulate AddressBook
  */
 public class AddressBookService {
+    FileIOService fileIOService = new FileIOService();
     List<ContactPOJO> contactsList = new ArrayList<>();
     ScannerForAddressBook scannerForAddressBook = new ScannerForAddressBook();
 
@@ -34,7 +35,8 @@ public class AddressBookService {
         System.out.println("Please enter phone number");
         contacts.setPhoneNumber(scannerForAddressBook.scannerProvider().nextLine());
         contactsList.add(contacts);
-        System.out.println(contactsList);
+        fileIOService.writeToFile(contactsList);
+        fileIOService.printData();
     }
 
     /**
@@ -84,7 +86,7 @@ public class AddressBookService {
                         break;
                     default:
                         System.out.println("Thank you!");
-                        System.out.println(contactsList);
+                        fileIOService.printData();
                         isExit = true;
                 }
             }
